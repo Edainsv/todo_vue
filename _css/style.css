@@ -1,0 +1,169 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body, #app {
+	background-color: rgb(30, 30, 30);
+	width: 100%;
+	min-height: 100vh;
+}
+#app {
+	padding-top: 10px;
+}
+
+h1 {
+	color: gold;
+	text-align: center;
+}
+h2 {
+	margin-bottom: 10px;
+}
+
+.form_todo {
+	position: relative;
+	margin: auto;
+	margin-top: 40px;
+	max-width: 450px;
+	height: 300px;
+	background-color: #E7B689;
+	border: 2px solid #fff;
+	border-radius: 10px;
+}
+
+/* Les onglets */
+.tab_select {
+	display: flex;
+	justify-content: space-between;
+	position: absolute;
+	bottom: 100%;
+	left: 0;
+	width: 100%;
+	padding: 0 10px;
+}
+.tab_select div button {
+	font-weight: bold;
+	padding: .2rem .5rem;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	background: #fff;
+	border: 2px solid white;
+	border-bottom: none;
+	margin-right: 5px;
+	transition: all .3s;
+}
+.tab_select div button:hover {
+	cursor: pointer;
+	background-color: #E7B689;
+}
+.tab_select div button.active {
+	background-color: #E7B689;
+}
+
+.form_addTask input, .form_addTask button {
+	height: 100%;
+	padding: .2rem;
+	border: none;
+}
+.form_addTask input {
+	background-color: rgba(255, 255, 255, .7);
+}
+.form_addTask input:focus {
+	outline: none;
+}
+.form_addTask button {
+	color: green;
+	margin-left: 5px;
+	width: 25px;
+}
+
+.form_addTask button:hover {
+	cursor: pointer;
+}
+
+/*********************/
+
+
+
+.list_todo {
+	padding: .7rem 2rem;
+	overflow-y: scroll;
+	height: 100%;
+}
+.list_todo ol {
+	list-style: none;
+}
+.list_todo ol li {
+	padding: .2rem .2rem .2rem .8rem;
+	margin-bottom: 5px;
+	border: 2px solid #786350;
+	border-radius: 5px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: #786350;
+	position: relative;
+}
+.list_todo ol li:hover {
+	background-color: rgba(0, 0, 0, .2);
+	cursor: pointer;
+}
+
+.modify_Task {
+	position: absolute;
+}
+
+
+/* Bouton d'action */
+
+.validate_todo, .delete_todo, .move_todo, .modify_todo {
+	margin-right: 5px;
+	cursor: pointer;
+	border-radius: 5px;
+	background: none;
+	padding: .2rem;
+	width: 25px;
+	height: 25px;
+	transition: all .4s;
+}
+
+.validate_todo {
+	color: green;
+	border: 1px solid green;
+}
+.validate_todo:hover {
+	background-color: green;
+	color: #fff;
+}
+
+.delete_todo {
+	color: #EF5252;
+	border: 1px solid #EF5252;
+}
+.delete_todo:hover {
+	background-color: #EF5252;
+	color: white;
+}
+
+.move_todo {
+	color: #252424;
+	border: 1px solid #252424;
+}
+.move_todo:hover {
+	background-color: #252424;
+	color: white;
+}
+
+.modify_todo {
+	color: #8E8484;
+	border: 1px solid #8E8484;
+}
+.modify_todo:hover {
+	background-color: #8E8484;
+	color: white;
+}
+
+/*********************/
+
+
