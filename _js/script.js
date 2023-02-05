@@ -7,7 +7,7 @@ app.component('todo_list', {
 			active_tab: 1,
 			task_name: '',
 			task_list: {
-				'task': [['Boire', 0], ['Manger', 0], ['Rire', 0]] // Tableau contenant des tableaux à 2 entrées => [index 0 == nom | index 1 == status]
+				'task': [] // Tableau contenant des tableaux à 2 entrées => [index 0 == nom | index 1 == status]
 			},
 			task_modify: '',
 			before_modify: '',
@@ -48,7 +48,7 @@ app.component('todo_list', {
 			}			
 		},
 		cancelModifyTask(i) {
-			
+
 		},
 		refresh() {
 			this.modify = false;
@@ -97,7 +97,7 @@ app.component('todo_list', {
 
 						<div v-if="modify === i" class="rename_todo">
 							<input v-model="task_modify" class="modify_Task" type="text" placeholder="Nouveau nom" />
-							<button class="cancel" c-on:click.stop.prevent="cancelModifyTask(i)"><i class="fa fa-xmark"></i></button>
+							<!--<button class="cancel" c-on:click.stop.prevent="cancelModifyTask(i)"><i class="fa fa-xmark"></i></button>-->
 							<button class="accept" v-on:click.stop.prevent="modifyTask(i)"><i class="fa fa-check"></i></button>
 						</div>
 					</li>
@@ -119,7 +119,7 @@ app.component('todo_list', {
 
 						<div v-if="modify === i" class="rename_todo">
 							<input v-model="task_modify" class="modify_Task" type="text" placeholder="Nouveau nom" />
-							<button class="cancel" c-on:click.stop.prevent="cancelModifyTask(i)"><i class="fa fa-xmark"></i></button>
+							<!--<button class="cancel" c-on:click.stop.prevent="cancelModifyTask(i)"><i class="fa fa-xmark"></i></button>-->
 							<button class="accept" v-on:click.stop.prevent="modifyTask(i)"><i class="fa fa-check"></i></button>
 						</div>
 					</li>
