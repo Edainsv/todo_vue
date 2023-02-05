@@ -6,45 +6,55 @@ app.component('todo_list', {
 		return {
 			active_tab: 1,
 			task_name: '',
-			task_list: [],
-			task_finish: [],
-			modify: {
-				item: false,
-				list: 0
-			}
+			task_list: {
+				'task': [['Boire', 0], ['Manger', 0], ['Rire', 0]] // Tableau contenant des tableaux à 2 entrées => [index 0 == nom | index 1 == status]
+			},
+			task_modify: '',
+			before_modify: '',
+			modify: false
 		};
 	},
 	methods: {
 		addTask() { // Ajoute une tâche
-			if (this.task_name.length >= 3) {
-				this.task_list.push(this.task_name);
-				this.task_name = '';
+			if (this.task_name != '') {
+				this.task_list.task.push([this.task_name, 0]); // Ajoute le tableau avec un status 0 par défaut
+				this.task_name = ''
 			}
 		},
 		validateTask(i) {
-			this.task_finish.push(this.task_list[i]);
-			this.task_list.splice(i, 1);
-		},
-		moveTask(i) {
-			this.task_list.push(this.task_finish[i]);
-			this.task_finish.splice(i, 1);
-		},
-		deleteTask(i) {
-			switch (this.active_tab) {
-				case 1: // En cours
-					this.task_list.splice(i, 1);
-				break;
-
-				case 2: // Terminée
-					this.task_finish.splice(i, 1);
-				break;
-
-				default:
-				return;
+			if (!this.modify) {
+				this.task_list.task[i][1] = 1
 			}
 		},
-		modifyTask(i) { // Modifier le nom d'une tâche (A VENIR !)
-
+		moveTask(i) {
+			if (!this.modify) {
+				this.task_list.task[i][1] = 0
+			}
+		},
+		deleteTask(i) {
+			if (!this.modify) {
+				this.task_list.task.splice(i, 1);
+			}
+		},
+		modifyTask(i) {	
+			if (this.task_modify == '') {
+				this.modify = i;
+			} else {
+				if (this.modify == i && this.task_modify != '') {
+					this.before_modify = this.task_list.task[i][0];
+					this.task_list.task[i][0] = this.task_modify;
+					this.refresh();
+				}
+			}			
+		},
+		cancelModifyTask(i) {
+			
+		},
+		refresh() {
+			this.modify = false;
+			this.task_name = '';
+			this.task_modify = '';
+			this.before_modify = '';
 		}
 	},
 	template: `
@@ -75,17 +85,21 @@ app.component('todo_list', {
 			<div class="list_todo" v-if="active_tab == 1">
 				<h2>En cours</h2>
 
-				<ol v-for="(task, i) in task_list">
-					<li>
-						{{ task }}
+				<ol v-for="(task, i) in task_list.task">
+					<li v-if="task[1] == 0">
+						{{ task[0] }}
 
 						<div>
 							<button class="validate_todo" v-on:click.stop.prevent="validateTask(i)"><i class="fa fa-check"></i></button>
-							<!--<button class="modify_todo" v-on:click.stop.prevent="modifyTask(i)"><i class="fa fa-pencil"></i></button>-->
+							<button class="modify_todo" v-on:click.stop.prevent="modifyTask(i)"><i class="fa fa-pencil"></i></button>
 							<button class="delete_todo" v-on:click.stop.prevent="deleteTask(i)"><i class="fa fa-trash"></i></button>
 						</div>
 
-						<!--<input v-if="modify.item === i" class="modify_Task" type="text" v-model="task_name" placeholder="Nom de la tâche" />-->
+						<div v-if="modify === i" class="rename_todo">
+							<input v-model="task_modify" class="modify_Task" type="text" placeholder="Nouveau nom" />
+							<button class="cancel" c-on:click.stop.prevent="cancelModifyTask(i)"><i class="fa fa-xmark"></i></button>
+							<button class="accept" v-on:click.stop.prevent="modifyTask(i)"><i class="fa fa-check"></i></button>
+						</div>
 					</li>
 				</ol>
 			</div>
@@ -93,17 +107,21 @@ app.component('todo_list', {
 			<div class="list_todo" v-if="active_tab == 2">
 				<h2>Terminée</h2>
 
-				<ol v-for="(task, i) in task_finish">
-					<li>
-						{{ task }}
+				<ol v-for="(task, i) in task_list.task">
+					<li v-if="task[1] == 1">
+						{{ task[0] }}
 
 						<div>
 							<button class="move_todo" v-on:click.stop.prevent="moveTask(i)"><i class="fa fa-arrow-left"></i></button>
-							<!--<button class="modify_todo" v-on:click.stop.prevent="modifyTask(i)"><i class="fa fa-pencil"></i></button>-->
+							<button class="modify_todo" v-on:click.stop.prevent="modifyTask(i)"><i class="fa fa-pencil"></i></button>
 							<button class="delete_todo" v-on:click.stop.prevent="deleteTask(i)"><i class="fa fa-trash"></i></button>
 						</div>
 
-						<!--<input v-if="modify.item === i" class="modify_Task" type="text" v-model="task_name" placeholder="Nom de la tâche" />-->
+						<div v-if="modify === i" class="rename_todo">
+							<input v-model="task_modify" class="modify_Task" type="text" placeholder="Nouveau nom" />
+							<button class="cancel" c-on:click.stop.prevent="cancelModifyTask(i)"><i class="fa fa-xmark"></i></button>
+							<button class="accept" v-on:click.stop.prevent="modifyTask(i)"><i class="fa fa-check"></i></button>
+						</div>
 					</li>
 				</ol>
 			</div>
